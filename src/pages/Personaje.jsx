@@ -5,13 +5,9 @@ import { StorageContext } from "../App"
 
 export default function Personaje() {
 
-  
     const params = useParams();
-
-
     const {storage} = useContext(StorageContext);
 
-    console.log(storage.results[params.id]);
     return (
       <div className="card">
             <img src={storage.results[params.id].image} className="card-img-top" alt="..."></img>
