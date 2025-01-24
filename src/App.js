@@ -1,42 +1,28 @@
 import './App.css';
-import { use, useState, useEffect } from 'react';
-import imagenRickMorty from './img/rick-morty.png';
-import Characters from './components/Characters';
-import { useFetch } from './hooks/useFetch';
+
+import { Routes, Route } from 'react-router-dom';
+import CharactersPage from './pages/CharactersPage';
+import Layout from './layouts/layout';
+import Personaje from './pages/Personaje';
+import { useContext, createContext , useState} from 'react';
+import BlogCharacter from './pages/BlogCharacter';
+export const StorageContext = createContext();
+
 function App() {
 
-  const [characters, setCharacters] = useState(null);
-
-  //hook personalizado usefetch useCallback
-  // sustituir utilizando el hook
-
-  const { data, loading, error } = useFetch('https://rickandmortyapi.com/api/character');
-
-  const reqApi = async () => {
-    setCharacters(data);
-  };
-
-  useEffect(() => {
-    setCharacters(data);
-  }, [data]);
-
+  const [storage, setStorage] = useState(StorageContext);
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {loading &&
-          <>
-            <h1 className="App-title">Rick & Morty</h1>
-            <img src={imagenRickMorty} className="App-logo" alt="logo" />
-            <button onClick={reqApi} className="btn-search">Reload</button>
-          </>}
-        {characters && (
-          <Characters characters={characters} setCharacters={setCharacters}></Characters>
-        )}
-        {error && <h1>{error}</h1>}
 
-      </header>
-    </div>
+    <StorageContext.Provider value={{storage, setStorage}}>
+      <Routes>
+        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<CharactersPage />} />
+          <Route path="/Personaje/:id" element={<Personaje />} />
+          <Route path="/BlogCharacters" element={<BlogCharacter />} />
+        </Route>
+      </Routes>
+    </StorageContext.Provider>
   );
 }
 

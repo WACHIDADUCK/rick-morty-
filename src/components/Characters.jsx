@@ -1,11 +1,12 @@
+import { Link } from "react-router-dom";  
+
+
 export default function Characters({characters, setCharacters  }) {
 
     return (
         <div>
-            <h1>Characters</h1>
             <div className="container-characters">
                 {characters.results.map((character, index) => (
-
                     <div className="character-container" key={index}>
                         <div>
                             <img src={character.image} alt={character.name} />
@@ -23,6 +24,7 @@ export default function Characters({characters, setCharacters  }) {
                                 <span className="text-grey">Episodios:</span>
                                 <span>{character.episode.length}</span>
                             </p>
+                            <Link className="linkPersonaje" key={character.id} to={`/personaje/${character.id}`}>Ver Personaje</Link>
                         </div>                      
                     </div>
                 ))}
